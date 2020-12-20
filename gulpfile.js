@@ -23,7 +23,7 @@ const paths = {
       images: "src/images/**/*.{png,jpg}",
       icons: "src/icons/**/*.svg",
       scripts: "src/scripts/**/*.js",
-      fonts: "src/fonts/**/*.{ttf}",
+      fonts: "src/fonts/**/*.ttf",
    },
 
    build: {
