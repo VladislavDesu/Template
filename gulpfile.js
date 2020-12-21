@@ -92,6 +92,7 @@ gulp.task("images", () => {
       }),
    ]))
    .pipe(gulp.dest(paths.build.images))
+   .pipe(gulp.src(paths.src.images))
    .pipe(webp())
    .pipe(gulp.dest(paths.build.images))
    .pipe(browserSync.stream());
