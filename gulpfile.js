@@ -12,6 +12,7 @@ const gulp = require("gulp"),
       plumber = require("gulp-plumber"),
       ttf2woff = require("gulp-ttf2woff"),
       ttf2woff2 = require("gulp-ttf2woff2"),
+      uglify = require("gulp-uglify"),
       clean = require("gulp-clean"),
       rename = require("gulp-rename");
 
@@ -113,6 +114,7 @@ gulp.task("icons", () => {
 
 gulp.task("scripts", () => {
    return gulp.src(paths.src.scripts)
+   .pipe(uglify())
    .pipe(gulp.dest(paths.build.scripts))
    .pipe(browserSync.stream());
 });
