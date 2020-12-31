@@ -4,8 +4,11 @@ const gulp = require("gulp"),
       mqpacker = require("css-mqpacker"),
       browserSync = require("browser-sync"),
       htmlmin = require("gulp-htmlmin"),
+      posthtml = require("gulp-posthtml"),
+      include = require("posthtml-include"),
       csso = require("gulp-csso"),
       scss = require("gulp-sass"),
+      sourcemaps = require("gulp-sourcemaps"),
       imagemin = require("gulp-imagemin"),
       webp = require("gulp-webp"),
       svgmin = require("gulp-svgmin"),
@@ -39,6 +42,9 @@ const paths = {
 
 gulp.task("html", () => {
    return gulp.src(paths.src.html)
+   .pipe(posthtml([
+      include()
+   ]))
    .pipe(htmlmin({
       collapseWhitespace: true
    }))
@@ -48,6 +54,7 @@ gulp.task("html", () => {
 
 gulp.task("css", () => {
    return gulp.src(paths.src.styles)
+   .pipe(sourcemaps.init())
    .pipe(plumber())
    .pipe(scss({
       outputStyle: "expanded"
@@ -113,8 +120,10 @@ gulp.task("icons", () => {
 });
 
 gulp.task("scripts", () => {
-   return gulp.src(paths.src.scripts)
-   .pipe(uglify())
+   return gulp.src(paths.build.scripts, {allowEmpty: true})
+   .pipe(clean())
+   .pipe(gulp.src(paths.src.scripts))
+   // .pipe(uglify())
    .pipe(gulp.dest(paths.build.scripts))
    .pipe(browserSync.stream());
 });
